@@ -14,3 +14,6 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 2);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 3);
 
 INSERT INTO tb_course (name, img_Uri, img_Gray_Uri) VALUES ('Programação', 'https://www.hostinger.com.br/tutoriais/wp-content/uploads/sites/12/2018/03/o-que-e-html-1280x720.png','https://profdanielbrandao.files.wordpress.com/2016/01/html.jpg');
+
+INSERT INTO tb_offer (edition, start_Moment, end_Moment, course_id) VALUES ('1.0', TIMESTAMP WITH TIME ZONE '2020-07-13T20:50:07Z', TIMESTAMP WITH TIME ZONE '2021-07-13T20:50:07.12345Z', 1);
+INSERT INTO tb_offer (edition, start_Moment, end_Moment, course_id) VALUES ('2.0', TIMESTAMP WITH TIME ZONE '2020-12-01T20:50:07Z', TIMESTAMP WITH TIME ZONE '2021-12-01T20:50:07.12345Z', 1);
