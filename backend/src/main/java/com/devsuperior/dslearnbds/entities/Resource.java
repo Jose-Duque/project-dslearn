@@ -1,6 +1,8 @@
-package com.devduque.dslearn.entities;
+package com.devsuperior.dslearnbds.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,42 +10,45 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "tb_section") /*-O nome da tabela no banco */
-public class Section implements Serializable {
-	private static final long serialVersionUID = 1L;
+import com.devsuperior.dslearnbds.entities.enums.ResourceType;
 
+@Entity
+@Table(name = "tb_resource")
+public class Resource implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //Gera automatico o ID
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String title;
 	private String description;
 	private Integer position;
 	private String imgUri;
+	private ResourceType type;
 	
 	@ManyToOne
-	@JoinColumn(name = "resource_id")
-	private Resource resource;
+	@JoinColumn(name = "offer_id")
+	private Offer offer;
+
+	@OneToMany(mappedBy = "resource")
+	private List<Section> sections = new ArrayList<>();
 	
-	@ManyToOne
-	@JoinColumn(name = "prerequisite_id")
-	private Section prerequisite;
-	
-	public Section() {
+	public Resource() {
 	}
 
-	public Section(Long id, String title, String description, Integer position, String imgUri, Resource resource,
-			Section prerequisite) {
+	public Resource(Long id, String title, String description, Integer position, String imgUri, ResourceType type,
+			Offer offer) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.position = position;
 		this.imgUri = imgUri;
-		this.resource = resource;
-		this.prerequisite = prerequisite;
+		this.type = type;
+		this.offer = offer;
 	}
 
 	public Long getId() {
@@ -86,20 +91,20 @@ public class Section implements Serializable {
 		this.imgUri = imgUri;
 	}
 
-	public Resource getResource() {
-		return resource;
+	public ResourceType getType() {
+		return type;
 	}
 
-	public void setResource(Resource resource) {
-		this.resource = resource;
+	public void setType(ResourceType type) {
+		this.type = type;
 	}
 
-	public Section getPrerequisite() {
-		return prerequisite;
+	public Offer getOffer() {
+		return offer;
 	}
 
-	public void setPrerequisite(Section prerequisite) {
-		this.prerequisite = prerequisite;
+	public void setOffer(Offer offer) {
+		this.offer = offer;
 	}
 
 	@Override
@@ -118,7 +123,7 @@ public class Section implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Section other = (Section) obj;
+		Resource other = (Resource) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -126,6 +131,4 @@ public class Section implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 }

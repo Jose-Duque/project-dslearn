@@ -1,4 +1,4 @@
-package com.devduque.dslearn.entities;
+package com.devsuperior.dslearnbds.entities;
 
 import java.io.Serializable;
 
@@ -9,13 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_role") /*-O nome da tabela no banco */
-public class Role implements Serializable{
-
+@Table(name = "tb_role")
+public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //Gera automatico o ID
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String authority;
 	
@@ -68,5 +67,4 @@ public class Role implements Serializable{
 			return false;
 		return true;
 	}
-	
 }

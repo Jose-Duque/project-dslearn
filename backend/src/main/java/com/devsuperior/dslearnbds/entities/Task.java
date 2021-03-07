@@ -1,4 +1,4 @@
-package com.devduque.dslearn.entities;
+package com.devsuperior.dslearnbds.entities;
 
 import java.time.Instant;
 
@@ -7,20 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_task") /*-O nome da tabela no banco */
+@Table(name = "tb_task")
 public class Task extends Lesson {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String description;
 	private Integer questionCount;
 	private Integer approvalCount;
 	private Double weight;
 	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")	
 	private Instant dueDate;
 	
 	public Task() {
-		super();
 	}
 
 	public Task(Long id, String title, Integer position, Section section, String description, Integer questionCount,
@@ -72,6 +71,4 @@ public class Task extends Lesson {
 	public void setDueDate(Instant dueDate) {
 		this.dueDate = dueDate;
 	}
-	
-	
 }
