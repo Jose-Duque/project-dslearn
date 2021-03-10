@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -47,6 +48,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated");
@@ -58,8 +62,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		.withClient("dslearn")
 		.secret(passwordEncoder.encode("dslearn123"))
 		.scopes("read", "write")
-		.authorizedGrantTypes("password")
-		.accessTokenValiditySeconds(86400);
+		.authorizedGrantTypes("password", "refresh_token")
+		.accessTokenValiditySeconds(86400)
+		.refreshTokenValiditySeconds(86400);
 	}
 
 	@Override //Quem vai autorizar e formato do token
@@ -71,7 +76,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints.authenticationManager(authenticationManager)
 		.tokenStore(tokenStore)
 		.accessTokenConverter(accessTokenConverter)
-		.tokenEnhancer(chain);//adicionar informação do user
+		.tokenEnhancer(chain)
+		.userDetailsService(userDetailsService);//adicionar informação do user
 	}
 
 	
